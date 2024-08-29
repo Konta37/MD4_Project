@@ -1,6 +1,8 @@
 package konta.projectmd4.controller.admin;
 
 import konta.projectmd4.exception.CustomException;
+import konta.projectmd4.model.dto.resp.DataResponse;
+import konta.projectmd4.model.entity.admin.Roles;
 import konta.projectmd4.model.entity.user.Users;
 import konta.projectmd4.repository.admin.IRoleRepository;
 import konta.projectmd4.repository.admin.IUserRepository;
@@ -9,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/admin")
@@ -28,26 +33,27 @@ public class AdminController {
     }
 
     @GetMapping("/role")
-    public ResponseEntity<?> getRoles() {
-        return ResponseEntity.ok().body(roleRepository.findAll());
+    public ResponseEntity<DataResponse<List<Roles>>> getRoles() {
+//        return ResponseEntity.ok().body(roleRepository.findAll());
+        return new ResponseEntity<>(new DataResponse<>(roleRepository.findAll(), HttpStatus.OK), HttpStatus.OK);
     }
 
     //search by full name
     //default is all user
     @GetMapping("/user/find")
-    public ResponseEntity<?> getUser(@RequestParam(name = "fullName", required = false) String userFullName) {
+    public ResponseEntity<DataResponse<List<Users>>> getUser(@RequestParam(name = "fullName", required = false) String userFullName) {
         if (userFullName == null || userFullName.isEmpty()) {
-            return ResponseEntity.ok().body(userRepository.findAll());
+            return new ResponseEntity<>(new DataResponse<>(userRepository.findAll(), HttpStatus.OK), HttpStatus.OK);
         } else {
-            return ResponseEntity.ok().body(userRepository.findByFullNameContains(userFullName));
+            return new ResponseEntity<>(new DataResponse<>(userRepository.findByFullNameContains(userFullName), HttpStatus.OK), HttpStatus.OK);
         }
     }
 
     //change status of user id
     @PutMapping("/user/{userId}")
-    public ResponseEntity<?> updateUser(@PathVariable Long userId) throws CustomException {
+    public ResponseEntity<DataResponse<Users>> updateUser(@PathVariable Long userId) throws CustomException {
         Users updatedUser = userService.changeStatus(userId);  // Get the updated user directly
-        return ResponseEntity.ok().body(updatedUser);  // Return the updated user in the response
+        return new ResponseEntity<>(new DataResponse<>(updatedUser, HttpStatus.OK), HttpStatus.OK); // Return the updated user in the response
     }
 
 
@@ -56,10 +62,10 @@ public class AdminController {
      * @param pageable import from domain.Pageable
      * */
     @GetMapping("/user")
-    public ResponseEntity<?> getAllUsers(@PageableDefault(page = 0, size = 2) Pageable pageable) {
+    public ResponseEntity<DataResponse<Page<Users>>> getAllUsers(@PageableDefault(page = 0, size = 2) Pageable pageable) {
         // Use the pageable object to fetch paginated data
         Page<Users> usersPage = userRepository.findAll(pageable);
 
-        return ResponseEntity.ok().body(usersPage);
+        return new ResponseEntity<>(new DataResponse<>(usersPage, HttpStatus.OK), HttpStatus.OK);
     }
 }

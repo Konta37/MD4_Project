@@ -31,7 +31,7 @@ public class ProductGeneralController {
         Page<Product> productPage = productService.findAll(pageable);
 
 //        return ResponseEntity.ok().body(productPage);
-        return new ResponseEntity<>(new DataResponse<>(productPage,HttpStatus.OK),HttpStatus.OK);
+        return new ResponseEntity<>(new DataResponse<>(productPage, HttpStatus.OK), HttpStatus.OK);
     }
 
     @GetMapping("/{proId}")
@@ -46,14 +46,21 @@ public class ProductGeneralController {
             throw new CustomException("Can't find list product with category id " + cateId, HttpStatus.NOT_FOUND);
         }
 //        return ResponseEntity.ok().body(productList);
-        return new ResponseEntity<>(new DataResponse<>(productList,HttpStatus.OK),HttpStatus.OK);
+        return new ResponseEntity<>(new DataResponse<>(productList, HttpStatus.OK), HttpStatus.OK);
     }
 
-        @GetMapping("/search")
-        public ResponseEntity<DataResponse<List<Product>>> getProductBySearch(@RequestParam String search) throws CustomException {
-            List<Product> productList = productService.findProductsByNameIgnoreCaseOrDescriptionIgnoreCase(search,search);
-            return new ResponseEntity<>(new DataResponse<>(productList,HttpStatus.OK),HttpStatus.OK);
-        }
+    //search by name or description
+    @GetMapping("/search")
+    public ResponseEntity<DataResponse<List<Product>>> getProductBySearch(@RequestParam String search) throws CustomException {
+        List<Product> productList = productService.findProductsByNameIgnoreCaseOrDescriptionIgnoreCase(search, search);
+        return new ResponseEntity<>(new DataResponse<>(productList, HttpStatus.OK), HttpStatus.OK);
+    }
+
+    //new products
+    @GetMapping("/new-products")
+    public ResponseEntity<DataResponse<List<Product>>> getNewProducts() {
+        return new ResponseEntity<>(new DataResponse<>(productService.findTop10ByOrderByCreatedAtDesc(), HttpStatus.OK), HttpStatus.OK);
+    }
 
 
 }

@@ -62,4 +62,9 @@ public class ProductService implements IProductService {
     public List<Product> findProductsByNameIgnoreCaseOrDescriptionIgnoreCase(String name, String description) {
         return productRepository.findProductsByNameContainsIgnoreCaseOrDescriptionContainsIgnoreCase(name,description);
     }
+
+    @Override
+    public List<Product> findTop10ByOrderByCreatedAtDesc() {
+        return productRepository.findTop10ByOrderByCreatedAtDesc();
+    }
 }

@@ -15,4 +15,5 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findProductByCategoryId(Integer categoryId);
     Optional<Product> findProductById(Integer id);
     List<Product> findProductsByNameContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String name, String description); // General search by name or description
+    List<Product> findTop10ByOrderByCreatedAtDesc();
 }

@@ -14,4 +14,5 @@ public interface IProductService {
     Product findById(Integer id) throws CustomException;
     List<Product> findProductByCategoryId(Integer categoryId);
     List<Product> findProductsByNameIgnoreCaseOrDescriptionIgnoreCase(String name, String description);
+    List<Product> findTop10ByOrderByCreatedAtDesc();
 }
