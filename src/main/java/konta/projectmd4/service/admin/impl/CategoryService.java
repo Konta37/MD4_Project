@@ -7,6 +7,8 @@ import konta.projectmd4.repository.admin.ICategoryRepository;
 import konta.projectmd4.service.admin.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +34,25 @@ public class CategoryService implements ICategoryService {
                 .status(true)
                 .build();
         return categoryRepository.save(category);
+    }
+
+    @Override
+    public Optional<Category> findByName(String name) {
+        return categoryRepository.findByName(name);
+    }
+
+    @Override
+    public Page<Category> findAll(Pageable pageable) {
+        return categoryRepository.findAll(pageable);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public Category findCategoryById(Integer id) throws CustomException{
+        return categoryRepository.findById(id).orElseThrow(() -> new CustomException("There is no category with ID " + id, HttpStatus.NOT_FOUND));
     }
 }
