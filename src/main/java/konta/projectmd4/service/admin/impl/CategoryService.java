@@ -3,6 +3,7 @@ package konta.projectmd4.service.admin.impl;
 import konta.projectmd4.exception.CustomException;
 import konta.projectmd4.model.dto.req.FormCategory;
 import konta.projectmd4.model.entity.admin.Category;
+import konta.projectmd4.model.entity.admin.Product;
 import konta.projectmd4.repository.admin.ICategoryRepository;
 import konta.projectmd4.service.admin.ICategoryService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +21,8 @@ import java.util.Optional;
 public class CategoryService implements ICategoryService {
     @Autowired
     private ICategoryRepository categoryRepository;
+    @Autowired
+    private ProductService productService;
 
     @Override
     public Category save(FormCategory formCategory) throws CustomException {
@@ -47,7 +51,11 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Integer id) throws CustomException{
+        List<Product> productList = productService.findProductByCategoryId(id);
+        if (!productList.isEmpty()) {
+            throw new CustomException("This category has products so can't delete",HttpStatus.BAD_REQUEST);
+        }
         categoryRepository.deleteById(id);
     }
 

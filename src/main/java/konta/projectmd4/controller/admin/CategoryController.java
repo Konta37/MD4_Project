@@ -37,4 +37,10 @@ public class CategoryController {
 //        return new ResponseEntity<>(savedCategory, HttpStatus.CREATED); // Use 201 Created status
         return new ResponseEntity<>(new DataResponse<>(savedCategory,HttpStatus.CREATED), HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<DataResponse<String>> deleteCategory(@PathVariable Integer categoryId) throws CustomException {
+        categoryService.deleteById(categoryId);
+        return new ResponseEntity<>(new DataResponse("Success",HttpStatus.OK), HttpStatus.OK);
+    }
 }

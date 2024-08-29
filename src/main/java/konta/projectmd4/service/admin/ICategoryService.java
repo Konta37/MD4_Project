@@ -12,6 +12,6 @@ public interface ICategoryService {
     Category save(FormCategory formCategory) throws CustomException;
     Optional<Category> findByName(String name); // Method to find a category by name
     Page<Category> findAll(Pageable pageable);
-    void deleteById(Integer id);
+    void deleteById(Integer id) throws CustomException;
     Category findCategoryById(Integer id) throws CustomException;
 }
