@@ -1,6 +1,6 @@
 package konta.projectmd4.security.principle;
 
-import konta.projectmd4.model.Users;
+import konta.projectmd4.model.entity.user.Users;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +33,7 @@ public class MyUserDetails implements UserDetails {
     @Override
     public String getUsername()
     {
-        return this.users.getEmail();
+        return this.users.getUsername();
     }
 
     @Override

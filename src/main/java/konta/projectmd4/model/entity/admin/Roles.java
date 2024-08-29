@@ -1,4 +1,4 @@
-package konta.projectmd4.model;
+package konta.projectmd4.model.entity.admin;
 
 import jakarta.persistence.*;
 import konta.projectmd4.constants.RoleName;

@@ -1,4 +1,4 @@
-package konta.projectmd4.dto.req;
+package konta.projectmd4.model.dto.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class FormRegister {
-    private String fullName;
-    private String email;
+public class FormLogin {
+    private String username;
     private String password;
 }

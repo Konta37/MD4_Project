@@ -1,9 +1,10 @@
-package konta.projectmd4.model;
+package konta.projectmd4.model.entity.user;
 
 import jakarta.persistence.*;
+import konta.projectmd4.model.entity.admin.Roles;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -16,10 +17,14 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String username;
     private String fullName;
     private String email;
     private String password;
-    private LocalDate dob;
+    private String avatar;
+    private String address;
+    private Date createdAt;
+    private Date updatedAt;
     private String phone;
     private Boolean status;
     @ManyToMany(fetch = FetchType.EAGER)

@@ -1,7 +1,7 @@
 package konta.projectmd4.security.principle;
 
-import konta.projectmd4.model.Users;
-import konta.projectmd4.repository.IUserRepository;
+import konta.projectmd4.model.entity.user.Users;
+import konta.projectmd4.repository.admin.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +17,7 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        Users users = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("username not found"));
+        Users users = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("username not found"));
         return MyUserDetails.builder()
                 .users(users)
                 .authorities(users.getRoles().stream().map(roles -> new SimpleGrantedAuthority(roles.getRoleName().toString())).toList())
