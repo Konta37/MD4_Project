@@ -1,7 +1,7 @@
 package konta.projectmd4.security.principle;
 
-import konta.projectmd4.model.entity.user.Users;
-import konta.projectmd4.repository.admin.IUserRepository;
+import konta.projectmd4.model.entity.Users;
+import konta.projectmd4.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

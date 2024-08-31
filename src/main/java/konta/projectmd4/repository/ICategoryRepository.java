@@ -1,7 +1,6 @@
-package konta.projectmd4.repository.admin;
+package konta.projectmd4.repository;
 
-import konta.projectmd4.model.entity.admin.Category;
-import konta.projectmd4.model.entity.user.Users;
+import konta.projectmd4.model.entity.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

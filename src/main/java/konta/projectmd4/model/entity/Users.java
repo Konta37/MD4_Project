@@ -1,7 +1,6 @@
-package konta.projectmd4.model.entity.user;
+package konta.projectmd4.model.entity;
 
 import jakarta.persistence.*;
-import konta.projectmd4.model.entity.admin.Roles;
 import lombok.*;
 
 import java.util.Date;
@@ -34,4 +33,10 @@ public class Users {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Roles> roles;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="wishlist"
+            ,joinColumns = @JoinColumn(name="user_id")
+            ,inverseJoinColumns = @JoinColumn(name="product_id"))
+    private Set<Product> products;
 }

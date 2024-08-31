@@ -2,9 +2,9 @@ package konta.projectmd4.service.admin.impl;
 
 import konta.projectmd4.exception.CustomException;
 import konta.projectmd4.model.dto.req.FormCategory;
-import konta.projectmd4.model.entity.admin.Category;
-import konta.projectmd4.model.entity.admin.Product;
-import konta.projectmd4.repository.admin.ICategoryRepository;
+import konta.projectmd4.model.entity.Category;
+import konta.projectmd4.model.entity.Product;
+import konta.projectmd4.repository.ICategoryRepository;
 import konta.projectmd4.service.admin.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +62,13 @@ public class CategoryService implements ICategoryService {
     @Override
     public Category findCategoryById(Integer id) throws CustomException{
         return categoryRepository.findById(id).orElseThrow(() -> new CustomException("There is no category with ID " + id, HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    public Category update(Integer id,FormCategory categoryUpdate) throws CustomException {
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new CustomException("There is no category with ID " + id, HttpStatus.NOT_FOUND));
+        category.setName(categoryUpdate.getName());
+        category.setDescription(categoryUpdate.getDescription());
+        return categoryRepository.save(category);
     }
 }

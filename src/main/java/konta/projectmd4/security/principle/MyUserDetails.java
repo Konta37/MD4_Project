@@ -1,6 +1,6 @@
 package konta.projectmd4.security.principle;
 
-import konta.projectmd4.model.entity.user.Users;
+import konta.projectmd4.model.entity.Users;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

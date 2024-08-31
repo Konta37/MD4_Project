@@ -2,8 +2,8 @@ package konta.projectmd4.service.user.impl;
 
 import konta.projectmd4.constants.RoleName;
 import konta.projectmd4.exception.CustomException;
-import konta.projectmd4.model.entity.user.Users;
-import konta.projectmd4.repository.admin.IUserRepository;
+import konta.projectmd4.model.entity.Users;
+import konta.projectmd4.repository.IUserRepository;
 import konta.projectmd4.service.user.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

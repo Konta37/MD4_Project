@@ -1,8 +1,8 @@
 package konta.projectmd4.controller.general;
 
 import konta.projectmd4.model.dto.resp.DataResponse;
-import konta.projectmd4.model.entity.admin.Category;
-import konta.projectmd4.repository.admin.ICategoryRepository;
+import konta.projectmd4.model.entity.Category;
+import konta.projectmd4.repository.ICategoryRepository;
 import konta.projectmd4.service.admin.impl.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

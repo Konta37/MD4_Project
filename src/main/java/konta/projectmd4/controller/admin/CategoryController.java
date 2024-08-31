@@ -3,8 +3,8 @@ package konta.projectmd4.controller.admin;
 import konta.projectmd4.exception.CustomException;
 import konta.projectmd4.model.dto.req.FormCategory;
 import konta.projectmd4.model.dto.resp.DataResponse;
-import konta.projectmd4.model.entity.admin.Category;
-import konta.projectmd4.repository.admin.ICategoryRepository;
+import konta.projectmd4.model.entity.Category;
+import konta.projectmd4.repository.ICategoryRepository;
 import konta.projectmd4.service.admin.impl.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,9 +38,19 @@ public class CategoryController {
         return new ResponseEntity<>(new DataResponse<>(savedCategory,HttpStatus.CREATED), HttpStatus.CREATED);
     }
 
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<DataResponse<Category>> getCategory(@PathVariable Integer categoryId) throws CustomException {
+        return new ResponseEntity<>(new DataResponse<>(categoryService.findCategoryById(categoryId),HttpStatus.OK),HttpStatus.OK);
+    }
+
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<DataResponse<String>> deleteCategory(@PathVariable Integer categoryId) throws CustomException {
         categoryService.deleteById(categoryId);
-        return new ResponseEntity<>(new DataResponse("Success",HttpStatus.OK), HttpStatus.OK);
+        return new ResponseEntity<>(new DataResponse<>("Success",HttpStatus.OK), HttpStatus.OK);
+    }
+
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<DataResponse<Category>> updateCategory(@PathVariable("categoryId")Integer cateId, @RequestBody FormCategory cate) throws CustomException {
+        return new ResponseEntity<>(new DataResponse<>(categoryService.update(cateId,cate),HttpStatus.OK),HttpStatus.OK);
     }
 }

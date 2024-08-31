@@ -2,18 +2,16 @@ package konta.projectmd4.service.admin.impl;
 
 import konta.projectmd4.exception.CustomException;
 import konta.projectmd4.model.dto.req.FormProduct;
-import konta.projectmd4.model.entity.admin.Category;
-import konta.projectmd4.model.entity.admin.Product;
-import konta.projectmd4.repository.admin.ICategoryRepository;
-import konta.projectmd4.repository.admin.IProductRepository;
-import konta.projectmd4.service.admin.ICategoryService;
+import konta.projectmd4.model.entity.Category;
+import konta.projectmd4.model.entity.Product;
+import konta.projectmd4.repository.ICategoryRepository;
+import konta.projectmd4.repository.IProductRepository;
 import konta.projectmd4.service.admin.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +24,7 @@ public class ProductService implements IProductService {
     private IProductRepository productRepository;
     @Autowired
     private ICategoryRepository categoryRepository;
+
     @Override
     public Product save(FormProduct formProduct) throws CustomException{
         Category category = categoryRepository.findById(formProduct.getCategoryId())
@@ -66,5 +65,25 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> findTop10ByOrderByCreatedAtDesc() {
         return productRepository.findTop10ByOrderByCreatedAtDesc();
+    }
+
+    @Override
+    public void deleteById(Integer id) throws CustomException {
+        Product product = findById(id);
+        productRepository.delete(product);
+        //check if there are any product in wishlist, cart, order,...
+    }
+
+    @Override
+    public Product update(Integer productId, FormProduct productUpdate) throws CustomException {
+        Product product = findById(productId);
+        product.setName(productUpdate.getName());
+        product.setDescription(productUpdate.getDescription());
+        product.setUnitPrice(productUpdate.getUnitPrice());
+        product.setQuantity(productUpdate.getQuantity());
+        product.setImage(productUpdate.getImage());
+        product.setCategory(categoryRepository.findById(productUpdate.getCategoryId())
+                .orElseThrow(() -> new CustomException("There is no category with ID " + productUpdate.getCategoryId(), HttpStatus.NOT_FOUND)));
+        return productRepository.save(product);
     }
 }

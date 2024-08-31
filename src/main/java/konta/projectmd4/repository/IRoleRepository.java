@@ -1,7 +1,7 @@
-package konta.projectmd4.repository.admin;
+package konta.projectmd4.repository;
 
 import konta.projectmd4.constants.RoleName;
-import konta.projectmd4.model.entity.admin.Roles;
+import konta.projectmd4.model.entity.Roles;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

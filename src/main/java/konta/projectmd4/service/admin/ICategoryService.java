@@ -2,7 +2,7 @@ package konta.projectmd4.service.admin;
 
 import konta.projectmd4.exception.CustomException;
 import konta.projectmd4.model.dto.req.FormCategory;
-import konta.projectmd4.model.entity.admin.Category;
+import konta.projectmd4.model.entity.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,4 +14,5 @@ public interface ICategoryService {
     Page<Category> findAll(Pageable pageable);
     void deleteById(Integer id) throws CustomException;
     Category findCategoryById(Integer id) throws CustomException;
+    Category update(Integer id,FormCategory category) throws CustomException;
 }

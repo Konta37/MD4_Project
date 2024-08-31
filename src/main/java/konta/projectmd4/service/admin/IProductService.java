@@ -2,7 +2,7 @@ package konta.projectmd4.service.admin;
 
 import konta.projectmd4.exception.CustomException;
 import konta.projectmd4.model.dto.req.FormProduct;
-import konta.projectmd4.model.entity.admin.Product;
+import konta.projectmd4.model.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,4 +15,6 @@ public interface IProductService {
     List<Product> findProductByCategoryId(Integer categoryId);
     List<Product> findProductsByNameIgnoreCaseOrDescriptionIgnoreCase(String name, String description);
     List<Product> findTop10ByOrderByCreatedAtDesc();
+    void deleteById(Integer id) throws CustomException;
+    Product update(Integer productId,FormProduct product) throws CustomException;
 }
