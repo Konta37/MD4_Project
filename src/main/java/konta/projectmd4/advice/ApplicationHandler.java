@@ -4,6 +4,8 @@ import konta.projectmd4.exception.CustomException;
 import konta.projectmd4.model.dto.resp.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConversionException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,4 +50,13 @@ public class ApplicationHandler {
         return new ResponseEntity<>(new ErrorResponse<>("Error",ex.getMessage(),HttpStatus.NOT_FOUND),HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse<String>> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex){
+        return new ResponseEntity<>(new ErrorResponse<>("Error",ex.getMessage(),HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageConversionException.class)
+    public ResponseEntity<ErrorResponse<String>> handleHttpMessageConversionException(HttpMessageConversionException ex){
+        return new ResponseEntity<>(new ErrorResponse<>("Error",ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

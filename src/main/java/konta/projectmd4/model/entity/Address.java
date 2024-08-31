@@ -1,10 +1,8 @@
 package konta.projectmd4.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import jakarta.persistence.*;
 
@@ -13,6 +11,7 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +24,6 @@ public class Address {
     private String receiveName;
     @ManyToOne
     @JoinColumn(name="user_id")
+    @JsonIgnore  // Ignore the user field during serialization
     private Users user;
 }
