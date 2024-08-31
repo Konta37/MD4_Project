@@ -36,4 +36,9 @@ public class UserServiceImpl implements IUserService {
         users.setUpdatedAt(new Date());
         return userRepository.save(users);  // Return the updated user
     }
+
+    @Override
+    public Users getUserById(Long userId) {
+        return userRepository.getReferenceById(userId);
+    }
 }

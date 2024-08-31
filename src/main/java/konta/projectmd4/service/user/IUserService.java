@@ -5,4 +5,5 @@ import konta.projectmd4.model.entity.Users;
 
 public interface IUserService {
     public Users changeStatus(Long userId) throws CustomException;
+    Users getUserById(Long userId);
 }

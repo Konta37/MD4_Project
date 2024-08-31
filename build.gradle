@@ -35,6 +35,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.5'
+	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '9.3.0'
+
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
