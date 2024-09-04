@@ -13,6 +13,9 @@ import konta.projectmd4.security.jwt.JwtProvider;
 import konta.projectmd4.security.principle.MyUserDetails;
 import konta.projectmd4.service.IAuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +24,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +45,9 @@ public class AuthServiceImpl implements IAuthService {
     private final AuthenticationManager manager;
     private final JwtProvider jwtProvider;
 
+    @Autowired
+    private UploadFileImpl uploadFile;
+
     @Override
     public void register(FormRegister formRegister) throws CustomException
     {
@@ -49,6 +61,28 @@ public class AuthServiceImpl implements IAuthService {
             throw new CustomException("Email already exists", HttpStatus.BAD_REQUEST);
         }
 
+        //default image
+        // Set a default image
+        String defaultImagePath = "default_avatar.webp"; // Path to the default image in resources
+        Resource resource = new ClassPathResource(defaultImagePath);
+
+        String defaultImageLink = "";
+        try (InputStream inputStream = resource.getInputStream()) {
+            // Create a temp file from the InputStream
+            File tempFile = Files.createTempFile("default_avatar", ".webp").toFile();
+            try (FileOutputStream out = new FileOutputStream(tempFile)) {
+                StreamUtils.copy(inputStream, out);
+            }
+
+            // Upload the default image to Firebase and get the link
+            defaultImageLink = uploadFile.uploadFirebase(tempFile.getAbsolutePath());
+
+            // Delete the temp file after upload
+            tempFile.delete();
+        } catch (IOException e) {
+            throw new CustomException("Failed to upload default image", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         Set<Roles> roles = new HashSet<>();
         roles.add(findByRoleName(RoleName.ROLE_USER));
         Users users = Users.builder()
@@ -56,7 +90,7 @@ public class AuthServiceImpl implements IAuthService {
                 .username(formRegister.getUsername())
                 .email(formRegister.getEmail())
                 .password(passwordEncoder.encode(formRegister.getPassword()))
-//                .avatar("")
+                .avatar(defaultImageLink)
 //                .address("")
                 .createdAt(new Date())
                 .updatedAt(new Date())

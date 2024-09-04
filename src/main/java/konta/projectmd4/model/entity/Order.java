@@ -1,9 +1,6 @@
 package konta.projectmd4.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import jakarta.persistence.*;
 import java.util.Date;
@@ -13,6 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name="orders")
 public class Order {
     @Id
@@ -36,7 +34,8 @@ public class Order {
     @Column(name = "receive_phone")
     private String receivePhone;
     @Column(name = "payment")
-    private String payment;
+    @Enumerated(EnumType.STRING)
+    private Payment payment;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;

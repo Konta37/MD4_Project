@@ -1,5 +1,6 @@
 package konta.projectmd4.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 

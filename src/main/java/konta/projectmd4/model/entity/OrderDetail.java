@@ -1,10 +1,7 @@
 package konta.projectmd4.model.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import jakarta.persistence.*;
 
@@ -13,6 +10,7 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +18,8 @@ public class OrderDetail {
     @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;
-    @Column(name="product_name")
-    private String productName;
+//    @Column(name="product_name")
+//    private String productName;
     @ManyToOne
     @JoinColumn(name="order_id")
     private Order order;

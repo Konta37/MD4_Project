@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -20,7 +21,8 @@ public class Product {
     private String description;
     private Double unitPrice;
     private Integer quantity;
-    private String image;
+    private Boolean status;
+//    private String image;
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -42,4 +44,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id",referencedColumnName = "id", nullable = false)
     private Category category;
+
+    // OneToMany relationship with Image
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ImageProduct> images;
 }

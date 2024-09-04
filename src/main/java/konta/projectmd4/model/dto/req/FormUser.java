@@ -13,11 +13,10 @@ import java.util.Date;
 @Builder
 public class FormUser {
     private String fullName;
-    private String email;
+//    private String email;
 //    private String password;
-    private String avatar;
-//    private String address;
-
-    private Date updatedAt;
+//    private String avatar;
+    private String address;
+//    private Date updatedAt;
     private String phone;
 }

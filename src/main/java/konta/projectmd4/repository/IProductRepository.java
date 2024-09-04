@@ -15,4 +15,6 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
     Optional<Product> findProductById(Integer id);
     List<Product> findProductsByNameContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String name, String description); // General search by name or description
     List<Product> findTop10ByOrderByCreatedAtDesc();
+    List<Product> findTop10ByStatusTrueOrderByCreatedAtDesc();
+    Page<Product> findProductsByStatusTrue(Pageable pageable);
 }

@@ -10,15 +10,28 @@ import lombok.*;
 @Setter
 @Builder
 public class FormProduct {
-    @NotBlank(message = "name is blank")
+//    @NotBlank(message = "name is blank")
+//    private String name;
+//    private String description;
+//    @NotNull(message = "unit price is null")
+//    private Double unitPrice;
+//    @NotNull(message = "quantity is null")
+//    private Integer quantity;
+////    @NotBlank(message = "image is blank")
+////    private String image;
+//    @NotNull(message = "category id is blank")
+//    private Integer categoryId;
+    @NotBlank(message = "Name is required and cannot be blank")
     private String name;
+
     private String description;
-    @NotNull(message = "unit price is null")
+
+    @NotNull(message = "Unit price is required")
     private Double unitPrice;
-    @NotNull(message = "quantity is null")
+
+    @NotNull(message = "Quantity is required")
     private Integer quantity;
-    @NotBlank(message = "image is blank")
-    private String image;
-    @NotNull(message = "category id is blank")
+
+    @NotNull(message = "Category ID is required")
     private Integer categoryId;
 }
